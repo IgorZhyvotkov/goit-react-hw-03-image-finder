@@ -62,51 +62,27 @@ class App extends Component {
   };
 
   render() {
-    const { findingImg, totalPages, status, page, searchValue } = this.state;
+    const { findingImg, totalPages, status, page,} = this.state;
     const showBtn = findingImg.length !== 0 && page < totalPages;
-
-    if (status === STATUS.IDLE) {
-      return (
-        <Container>
-          <Searchbar onSubmit={this.onSearchSubmit} />
-          <ToastContainer autoClose={1500} />
-        </Container>
-      );
-    }
-
-    if (status === STATUS.PENDING) {
-      return (
-        <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-        />
-      );
-    }
-
-    if (status === STATUS.RESOLVED) {
-      return (
-        <Container>
-          <Searchbar onSubmit={this.onSearchSubmit} />
-          <ImageGallery searchValue={searchValue} findingImg={findingImg} />
-          {showBtn && <Button onBtnClick={this.loadMore} />}
-          <ToastContainer autoClose={1500} />
-        </Container>
-      );
-    }
-
-    if (status === STATUS.REJECTED) {
-      return (
-        <Container>
-          <Searchbar onSubmit={this.onSearchSubmit} />
-          <ToastContainer autoClose={1500} />
-        </Container>
-      );
-    }
+return(
+  <Container>
+  <Searchbar onSubmit={this.onSearchSubmit} />
+  <ImageGallery findingImg={findingImg} />
+  {status === STATUS.PENDING && (
+    <ColorRing
+      visible={true}
+      height="80"
+      width="80"
+      ariaLabel="blocks-loading"
+      wrapperStyle={{}}
+      wrapperClass="blocks-wrapper"
+      colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+    />
+  )}
+  {showBtn && <Button onBtnClick={this.loadMore} />}
+  <ToastContainer autoClose={1500} />
+</Container>
+)
   }
 }
 
